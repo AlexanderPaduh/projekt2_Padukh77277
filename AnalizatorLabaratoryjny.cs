@@ -238,7 +238,7 @@ namespace projekt2_Padukh77277
 
             // 6. Очистка и настройка ChartArea
             ChtWycresFx.ChartAreas.Clear();
-            var obszar = ChtWycresFx.ChartAreas.Add("ObszarWykresu");
+            var obszar = ChtWycresFx.ChartAreas.Add("ObszarWykresu"); 
 
             // --- КРИТИЧНО: НАСТРОЙКА ПОЗИЦИИ В ПРОЦЕНТАХ ---
             obszar.Position.Auto = false;
