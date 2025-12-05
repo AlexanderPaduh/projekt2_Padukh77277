@@ -32,6 +32,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dgvTWFx = new System.Windows.Forms.DataGridView();
             this.kolNumerPrzedziału = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kolWartośćX = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,12 +59,16 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblAnalizator = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.ChtWycresFx = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.btnWizualizacjaGraficzna = new System.Windows.Forms.Button();
+            this.btnResetuj = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTWFx)).BeginInit();
             this.grbPrzedziałX.SuspendLayout();
             this.gr1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChtWycresFx)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvTWFx
@@ -71,13 +78,14 @@
             this.kolNumerPrzedziału,
             this.kolWartośćX,
             this.kolWartośćFx});
-            this.dgvTWFx.Location = new System.Drawing.Point(610, 297);
+            this.dgvTWFx.Location = new System.Drawing.Point(587, 220);
             this.dgvTWFx.Margin = new System.Windows.Forms.Padding(4);
             this.dgvTWFx.Name = "dgvTWFx";
             this.dgvTWFx.RowHeadersWidth = 51;
             this.dgvTWFx.RowTemplate.Height = 24;
-            this.dgvTWFx.Size = new System.Drawing.Size(487, 566);
+            this.dgvTWFx.Size = new System.Drawing.Size(573, 666);
             this.dgvTWFx.TabIndex = 20;
+            this.dgvTWFx.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTWFx_CellContentClick);
             // 
             // kolNumerPrzedziału
             // 
@@ -87,7 +95,7 @@
             this.kolNumerPrzedziału.HeaderText = "Numer Przedziału X";
             this.kolNumerPrzedziału.MinimumWidth = 6;
             this.kolNumerPrzedziału.Name = "kolNumerPrzedziału";
-            this.kolNumerPrzedziału.Width = 50;
+            this.kolNumerPrzedziału.Width = 150;
             // 
             // kolWartośćX
             // 
@@ -97,7 +105,7 @@
             this.kolWartośćX.HeaderText = "Wartość zmiennej X";
             this.kolWartośćX.MinimumWidth = 6;
             this.kolWartośćX.Name = "kolWartośćX";
-            this.kolWartośćX.Width = 125;
+            this.kolWartośćX.Width = 150;
             // 
             // kolWartośćFx
             // 
@@ -191,6 +199,7 @@
             this.btnWizualizacjaTabelaryczna.TabIndex = 18;
             this.btnWizualizacjaTabelaryczna.Text = "wizualizacja tabliczna zmian wartoścs F(X)";
             this.btnWizualizacjaTabelaryczna.UseVisualStyleBackColor = true;
+            this.btnWizualizacjaTabelaryczna.Click += new System.EventHandler(this.btnWizualizacjaTabelaryczna_Click_1);
             // 
             // label6
             // 
@@ -222,6 +231,7 @@
             this.btnObliczFx.TabIndex = 15;
             this.btnObliczFx.Text = "Oblicz wartość funkcji F(x)\r\n";
             this.btnObliczFx.UseVisualStyleBackColor = true;
+            this.btnObliczFx.Click += new System.EventHandler(this.btnObliczFx_Click_1);
             // 
             // gr1
             // 
@@ -321,27 +331,70 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "a";
             // 
-            // label1
+            // lblAnalizator
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Times New Roman", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(419, 99);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(994, 53);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Analizator równiania kwadratowego (czyli F(x))\r\n";
+            this.lblAnalizator.AutoSize = true;
+            this.lblAnalizator.Font = new System.Drawing.Font("Times New Roman", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAnalizator.ForeColor = System.Drawing.Color.Black;
+            this.lblAnalizator.Location = new System.Drawing.Point(419, 99);
+            this.lblAnalizator.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAnalizator.Name = "lblAnalizator";
+            this.lblAnalizator.Size = new System.Drawing.Size(994, 53);
+            this.lblAnalizator.TabIndex = 13;
+            this.lblAnalizator.Text = "Analizator równiania kwadratowego (czyli F(x))\r\n";
             // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
+            // 
+            // ChtWycresFx
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.ChtWycresFx.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.ChtWycresFx.Legends.Add(legend1);
+            this.ChtWycresFx.Location = new System.Drawing.Point(587, 360);
+            this.ChtWycresFx.Name = "ChtWycresFx";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.ChtWycresFx.Series.Add(series1);
+            this.ChtWycresFx.Size = new System.Drawing.Size(573, 526);
+            this.ChtWycresFx.TabIndex = 22;
+            this.ChtWycresFx.Text = "Wartosci Funkcji  ";
+            this.ChtWycresFx.Visible = false;
+            // 
+            // btnWizualizacjaGraficzna
+            // 
+            this.btnWizualizacjaGraficzna.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnWizualizacjaGraficzna.Location = new System.Drawing.Point(1559, 517);
+            this.btnWizualizacjaGraficzna.Margin = new System.Windows.Forms.Padding(4);
+            this.btnWizualizacjaGraficzna.Name = "btnWizualizacjaGraficzna";
+            this.btnWizualizacjaGraficzna.Size = new System.Drawing.Size(217, 120);
+            this.btnWizualizacjaGraficzna.TabIndex = 23;
+            this.btnWizualizacjaGraficzna.Text = "wizualizacja graficzna zmian Wartości funcji rownania Fx";
+            this.btnWizualizacjaGraficzna.UseVisualStyleBackColor = true;
+            this.btnWizualizacjaGraficzna.Click += new System.EventHandler(this.btnWizualizacjaGraficzna_Click);
+            // 
+            // btnResetuj
+            // 
+            this.btnResetuj.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnResetuj.Location = new System.Drawing.Point(1559, 655);
+            this.btnResetuj.Margin = new System.Windows.Forms.Padding(4);
+            this.btnResetuj.Name = "btnResetuj";
+            this.btnResetuj.Size = new System.Drawing.Size(217, 120);
+            this.btnResetuj.TabIndex = 24;
+            this.btnResetuj.Text = "RESETUJ (ustawinie stanu pcządkowego) ";
+            this.btnResetuj.UseVisualStyleBackColor = true;
             // 
             // AnalizatorLabaratoryjny
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2140, 1372);
+            this.Controls.Add(this.btnResetuj);
+            this.Controls.Add(this.btnWizualizacjaGraficzna);
+            this.Controls.Add(this.ChtWycresFx);
             this.Controls.Add(this.dgvTWFx);
             this.Controls.Add(this.grbPrzedziałX);
             this.Controls.Add(this.btnWizualizacjaTabelaryczna);
@@ -349,7 +402,7 @@
             this.Controls.Add(this.txtFx);
             this.Controls.Add(this.btnObliczFx);
             this.Controls.Add(this.gr1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblAnalizator);
             this.Name = "AnalizatorLabaratoryjny";
             this.Text = "AnalizatorLabaratoryjny";
             ((System.ComponentModel.ISupportInitialize)(this.dgvTWFx)).EndInit();
@@ -358,6 +411,7 @@
             this.gr1.ResumeLayout(false);
             this.gr1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ChtWycresFx)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -366,9 +420,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvTWFx;
-        private System.Windows.Forms.DataGridViewTextBoxColumn kolNumerPrzedziału;
-        private System.Windows.Forms.DataGridViewTextBoxColumn kolWartośćX;
-        private System.Windows.Forms.DataGridViewTextBoxColumn kolWartośćFx;
         private System.Windows.Forms.GroupBox grbPrzedziałX;
         private System.Windows.Forms.TextBox txtH;
         private System.Windows.Forms.Label label9;
@@ -389,7 +440,13 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblAnalizator;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button btnWizualizacjaGraficzna;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ChtWycresFx;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kolNumerPrzedziału;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kolWartośćX;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kolWartośćFx;
+        private System.Windows.Forms.Button btnResetuj;
     }
 }
